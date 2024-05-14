@@ -1,0 +1,70 @@
+"""
+Title:
+
+1544. Make The String Great
+
+Description:
+	Given a string s of lower and upper case English letters.
+	A good string is a string which doesn't have two adjacent characters s[i] and s[i + 1] where:
+		0 <= i <= s.length - 2
+		s[i] is a lower-case letter and s[i + 1] is the same letter but in upper-case or vice-versa.
+	To make the string good, you can choose two adjacent characters that make the string bad and remove them. You can keep doing this until the string becomes good.
+	Return the string after making it good. The answer is guaranteed to be unique under the given constraints.
+	Notice that an empty string is also good.
+
+Examples:
+	Input: s = "leEeetcode"
+	Output: "leetcode"
+	Explanation: In the first step, either you choose i = 1 or i = 2, both will result "leEeetcode" to be reduced to "leetcode".
+
+	Input: s = "abBAcC"
+	Output: ""
+	Explanation: We have many possible scenarios, and all lead to the same answer. For example:
+	"abBAcC" --> "aAcC" --> "cC" --> ""
+	"abBAcC" --> "abBA" --> "aA" --> ""
+
+	Input: s = "s"
+	Output: "s"
+
+
+Constrains:
+	1 <= s.length <= 100
+	s contains only lower and upper case English letters.
+"""
+
+
+class Solution(object):
+    def makeGood(self, s: str) -> str:
+
+        queue = []
+
+        # loop over all characters in the string
+        for char in s:
+
+            # if we have no characters in the queue, add it
+            if not queue:
+                queue.append(char)
+            else:
+
+                # if incoming character does not equal last character unless case is changed, then remove
+                if queue[-1] != char and (queue[-1].upper() == char or queue[-1].lower() == char):
+                    queue.pop()
+                else:
+                    # otherwise, added character to string
+                    queue.append(char)
+
+        return ''.join(queue)
+        
+
+
+
+if __name__ == "__main__":
+	sol = Solution()
+
+
+	s = "leEeetcode"			# -> "leetcode"
+	# s = "abBAcC"			# -> ""
+	# s = "s"				# -> "s"
+
+
+	print(sol.makeGood(s=s))
